@@ -35,10 +35,10 @@ export default function CardWrapper({
   numberOfCustomers,
 }: CardWrapperProps) {
   const cards: CardData[] = [
-    { title: 'Collected', value: totalPaidInvoices, type: 'collected' },
-    { title: 'Pending', value: totalPendingInvoices, type: 'pending' },
-    { title: 'Total Invoices', value: numberOfInvoices, type: 'invoices' },
-    { title: 'Total Customers', value: numberOfCustomers, type: 'customers' },
+    { title: 'Collected', value: totalPaidInvoices ?? 0, type: 'collected' },
+    { title: 'Pending', value: totalPendingInvoices ?? 0, type: 'pending' },
+    { title: 'Total Invoices', value: numberOfInvoices ?? 0, type: 'invoices' },
+    { title: 'Total Customers', value: numberOfCustomers ?? 0, type: 'customers' },
   ];
 
   return (
@@ -56,7 +56,7 @@ function Card({ title, value, type }: CardData) {
   return (
     <div className="rounded-xl bg-gray-50 p-4 shadow-sm">
       <div className="flex items-center space-x-2">
-        <Icon className="h-5 w-5 text-gray-700" />
+        <Icon className="h-5 w-5 text-gray-700" aria-hidden="true" />
         <h3 className="text-sm font-medium">{title}</h3>
       </div>
       <p
