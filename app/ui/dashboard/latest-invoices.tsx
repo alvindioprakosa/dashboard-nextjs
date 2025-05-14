@@ -4,11 +4,13 @@ import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import { LatestInvoice } from '@/app/lib/definitions';
 
+interface LatestInvoicesProps {
+  latestInvoices: LatestInvoice[];
+}
+
 export default async function LatestInvoices({
   latestInvoices,
-}: {
-  latestInvoices: LatestInvoice[];
-}) {
+}: LatestInvoicesProps) {
   return (
     <div className="flex w-full flex-col md:col-span-4">
       <h2 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>
@@ -16,14 +18,11 @@ export default async function LatestInvoices({
       </h2>
 
       <div className="flex grow flex-col justify-between rounded-xl bg-gray-50 p-4">
-        <div className="bg-white px-6 rounded-md shadow-sm">
-          {latestInvoices.map((invoice, i) => (
+        <div className="bg-white px-6 rounded-md shadow-sm divide-y divide-gray-200">
+          {latestInvoices.map((invoice) => (
             <div
               key={invoice.id}
-              className={clsx(
-                'flex flex-row items-center justify-between py-4',
-                { 'border-t border-gray-200': i !== 0 }
-              )}
+              className="flex flex-row items-center justify-between py-4"
             >
               <div className="flex items-center">
                 <Image
@@ -43,7 +42,10 @@ export default async function LatestInvoices({
                 </div>
               </div>
               <p
-                className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
+                className={clsx(
+                  lusitana.className,
+                  'truncate text-sm font-medium md:text-base'
+                )}
               >
                 {invoice.amount}
               </p>
@@ -51,9 +53,9 @@ export default async function LatestInvoices({
           ))}
         </div>
 
-        <div className="flex items-center pt-6">
-          <ArrowPathIcon className="h-5 w-5 text-gray-500" />
-          <h3 className="ml-2 text-sm text-gray-500">Updated just now</h3>
+        <div className="flex items-center pt-6 text-sm text-gray-500">
+          <ArrowPathIcon className="h-5 w-5" />
+          <h3 className="ml-2">Updated just now</h3>
         </div>
       </div>
     </div>
